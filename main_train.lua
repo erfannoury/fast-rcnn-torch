@@ -37,7 +37,7 @@ model_opt.test = false
 model_opt.nclass = dataset:nclass()
 model_opt.groups = config.groups
 model_opt.fine_tunning = not config.resume_training
-
+model_opt.use_bn = config.use_batchnorm
 network = detection.Net(model_path, param_path, model_opt)
 
 -- Creating the network wrapper

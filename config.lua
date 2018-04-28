@@ -175,6 +175,11 @@ function config.parse(arg)
         1,
         "Number of groups to use in group convolutions"
     )
+    cmd:option(
+        "-use_batchnorm",
+        false,
+        "Whether to use batch normalization in MaryamNet models"
+    )
 
 
     -- Parsing the command line
