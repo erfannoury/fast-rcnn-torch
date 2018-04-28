@@ -35,6 +35,7 @@ end
 -- Creating the detection net
 model_opt.test = true
 model_opt.fine_tunning = false
+model_opt.groups = config.groups
 network = detection.Net(model_path, param_path, model_opt)
 
 -- Creating the wrapper

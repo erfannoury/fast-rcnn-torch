@@ -169,6 +169,13 @@ function config.parse(arg)
         "Path to be used for saving the trained models"
     )
 
+    -- New configs
+    cmd:option(
+        "-groups",
+        1,
+        "Number of groups to use in group convolutions"
+    )
+
 
     -- Parsing the command line
     config = cmd:parse(arg or {})
