@@ -180,6 +180,11 @@ function config.parse(arg)
         false,
         "Whether to use batch normalization in MaryamNet models"
     )
+    cmd:option(
+        "-use_maryamnet_inputmaker",
+        false,
+        "Whether to use MaryamNet input maker"
+    )
 
 
     -- Parsing the command line

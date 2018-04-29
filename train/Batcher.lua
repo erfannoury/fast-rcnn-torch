@@ -1,5 +1,8 @@
 local Batcher = torch.class("detection.Batcher")
 local inputMaker = detection.InputMaker()
+if config.use_maryamnet_inputmaker then
+    inputMaker = detection.MaryamNetInputMaker()
+end
 local utils = detection.GeneralUtils()
 
 

@@ -2,6 +2,9 @@ local NetworkWrapper = torch.class("detection.NetworkWrapper")
 local utils = detection.GeneralUtils()
 local ROI = detection.ROI()
 local InputMaker = detection.InputMaker()
+if config.use_maryamnet_inputmaker then
+    inputMaker = detection.MaryamNetInputMaker()
+end
 
 
 function NetworkWrapper:__init()
