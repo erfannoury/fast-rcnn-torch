@@ -202,8 +202,8 @@ end
 function DataSetPascal:_write_detections(all_detections)
     -- write detectuions for the external matlab devkit
     local comp_id = "comp4"
-    local save_path =
-        config.dataset_path .. "/" .. config.dataset .. "/results/VOC" .. self.year .. "/Main/" .. comp_id .. "_"
+    paths.mkdir(config.save_path .. '/Main/')
+    local save_path = config.save_path .. '/Main/' .. comp_id .. '_'
     for cls_id, cls_name in ipairs(self.classes) do
         print("Writing detections for " .. cls_name)
         local file_path = save_path .. "det_" .. self.image_set .. "_" .. cls_name .. ".txt"
@@ -249,8 +249,9 @@ function DataSetPascal:evaluate(all_detections)
                 "matlab -nodisplay -nodesktop " ..
                     '-r "' ..
                         string.format(
-                            'voc_eval(\'%s\',\'%s\',\'%s\',\'%s\',%d); quit;"',
-                            "../../" .. config.dataset_path .. "/" .. config.dataset,
+                            'voc_eval(\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',%d); quit;"',
+                            config.dataset_path .. "/" .. config.dataset,
+                            config.save_path,
                             comp_id,
                             self.image_set,
                             "../../cache",
