@@ -169,10 +169,10 @@ function SequentialTrainer:_trainBatch(inputs_cpu, labels_cpu, loss_weights_cpu,
         file:write(utils:table2str(config))
         file:close()
         print("Network saved in: " .. save_path .. "\n\n")
-        self._logger:style {
-            ["classification loss"] = "-", -- define styles for plots
-            ["regression loss"] = "-"
-        }
-        self._logger:plot()
+        -- self._logger:style {
+        --    ["classification loss"] = "-", -- define styles for plots
+        --    ["regression loss"] = "-"
+        -- }
+        -- self._logger:plot()
     end
 end
