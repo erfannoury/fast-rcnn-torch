@@ -125,7 +125,7 @@ function config.parse(arg)
     )
     cmd:option(
         "-dataset_path",
-        "./data/datasets",
+        "/nfs1/datasets/PASCAL/VOCdevkit/",
         "Path to the dataset root folder"
     )
     cmd:option(
