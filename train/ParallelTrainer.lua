@@ -209,10 +209,10 @@ function ParallelTrainer._trainBatch(inputs_cpu, labels_cpu, loss_weights_cpu, i
         file:write(utils:table2str(config))
         file:close()
         print("Network saved in: " .. save_path .. "\n\n")
-        _logger:style {
-            ["classification loss"] = "-", -- define styles for plots
-            ["regression loss"] = "-"
-        }
-        _logger:plot()
+        -- _logger:style {
+        --     ["classification loss"] = "-", -- define styles for plots
+        --     ["regression loss"] = "-"
+        -- }
+        -- _logger:plot()
     end
 end
