@@ -90,7 +90,7 @@ function config.parse(arg)
     )
     cmd:option(
         "-use_flipped",
-        true,
+        false,
         "Use horizontally-flipped images during training if true"
     )
     cmd:option(
