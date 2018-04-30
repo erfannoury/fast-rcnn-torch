@@ -9,6 +9,8 @@ local ss_dir = "./data/datasets/selective_search_data/"
 local ss_file = paths.concat(ss_dir, dataset_name .. "_" .. image_set .. ".mat")
 local param_path = config.pre_trained_file
 local model_path = config.model_def
+print('Creating save directory at ' .. config.save_path)
+paths.mkdir(config.save_path)
 
 
 -- Loading the dataset
