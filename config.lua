@@ -105,7 +105,7 @@ function config.parse(arg)
     )
     cmd:option(
         "-pixel_means",
-        {102.9801, 115.9465, 122.7717},
+        {-0.083300798050439, -0.10651495109198, -0.17295466315224},
         "Pixel mean values (BGR order)"
     )
     cmd:option(
@@ -155,7 +155,7 @@ function config.parse(arg)
     )
     cmd:option(
         "-optim_regimes",
-        {{30000, 1e-3, 5e-4}, {10000, 1e-4, 5e-4}},
+        {{30000, 1e-3, 5e-4}, {30000, 1e-4, 5e-4}, {20000, 5e-5, 5e-4}},
         "Optimization regime, each row is the number of iterations, the learning rate, and the weight decay"
     )
     cmd:option(
