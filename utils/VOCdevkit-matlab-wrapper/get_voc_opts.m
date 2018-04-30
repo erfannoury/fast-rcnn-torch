@@ -1,4 +1,4 @@
-function VOCopts = get_voc_opts(path)
+function VOCopts = get_voc_opts(path, resdir)
 
 tmp = pwd;
 cd(path);

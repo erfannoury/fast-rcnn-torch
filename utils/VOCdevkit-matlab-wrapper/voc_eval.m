@@ -1,6 +1,6 @@
-function res = voc_eval(path, comp_id, test_set, output_dir, rm_res)
+function res = voc_eval(path, resdir, comp_id, test_set, output_dir, rm_res)
 
-VOCopts = get_voc_opts(path);
+VOCopts = get_voc_opts(path, resdir);
 VOCopts.testset = test_set;
 
 for i = 1:length(VOCopts.classes)
