@@ -15,14 +15,14 @@ local function create_model(opt)
     -- SHARED PART
     local shared = nn.Sequential()
     local conv1 = cudnn.SpatialConvolution(
-        3, 96, 11, 11, 4, 4, 5, 5, 1)
+        3, 96, 11, 11, 4, 4, 2, 2, 1)
     conv1.name = "conv1"
     shared:add(conv1)
     if opt.use_bn then
         shared:add(cudnn.SpatialBatchNormalization(96))
     end
     shared:add(cudnn.ReLU(true))
-    shared:add(cudnn.SpatialMaxPooling(3, 3, 2, 2, 1, 1))
+    shared:add(cudnn.SpatialMaxPooling(3, 3, 2, 2))
 
     local conv2 = cudnn.SpatialConvolution(
         96, 256, 5, 5, 1, 1, 2, 2, opt.groups)
@@ -32,7 +32,7 @@ local function create_model(opt)
         shared:add(cudnn.SpatialBatchNormalization(256))
     end
     shared:add(cudnn.ReLU(true))
-    shared:add(cudnn.SpatialMaxPooling(3, 3, 2, 2, 1, 1))
+    shared:add(cudnn.SpatialMaxPooling(3, 3, 2, 2))
 
     local conv3 = cudnn.SpatialConvolution(
         256, 384, 3, 3, 1, 1, 1, 1, 1)
