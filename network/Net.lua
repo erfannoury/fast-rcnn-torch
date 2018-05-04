@@ -115,7 +115,7 @@ end
 function Net:training()
     self.model:training()
     if config.freeze_batchnorm then
-        model:apply(function(m) if torch.type(m):find("BatchNormalization")
+        self.model:apply(function(m) if torch.type(m):find("BatchNormalization")
             then m:evaluate() end end)
     end
 end
