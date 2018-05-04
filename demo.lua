@@ -19,6 +19,8 @@ if config.dataset == "MSCOCO" then
 else
     model_opt.nclass = 20
 end
+model_opt.groups = config.groups
+model_opt.use_bn = config.use_batchnorm
 
 network = detection.Net(model_path, param_path, model_opt)
 
