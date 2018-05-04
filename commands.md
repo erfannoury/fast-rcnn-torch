@@ -38,7 +38,7 @@ $ CUDA_VISIBLE_DEVICES=0 th main_train.lua \
     -log_path ./cache/bsslogs/ -dataset voc_2007\
     -dataset_path /nfs1/datasets/PASCAL/VOCdevkit \
     -save_path data/trained_models/bss2_nClasses12_fullbn \
-    -groups 1 -use_batchnorm -use_maryamnet_inputmaker --freeze_batchnorm
+    -groups 1 -use_batchnorm -use_maryamnet_inputmaker -use_flipped --freeze_batchnorm
 ```
 
 ## Testing BSS (12 classes, batchnorm in conv) finetune all with BN
@@ -51,5 +51,5 @@ $ CUDA_VISIBLE_DEVICES=0 th main_test.lua \
     -log_path ./cache/bsslogs/ -dataset voc_2007\
     -dataset_path /nfs1/datasets/PASCAL/VOCdevkit \
     -save_path data/trained_models/bss2_nClasses12_fullbn \
-    -groups 1 -use_batchnorm -use_maryamnet_inputmaker --freeze_batchnorm
+    -groups 1 -use_batchnorm -use_maryamnet_inputmaker -use_flipped --freeze_batchnorm
 ```
