@@ -86,6 +86,11 @@ function Net:load_weight(weight_file_path)
                         print("Copying weights from " .. my_name .. " layer!")
                         model_modules[j].weight:copy(loaded_modules[i].weight)
                         model_modules[j].bias:copy(loaded_modules[i].bias)
+                        if torch.type(model_modules[j]):find("BatchNormalization") then
+                            print("Copying running mean and running vars from " .. my_name)
+                            model_modules[j].running_mean:copy(loaded_modules[i].running_mean)
+                            model_modules[j].running_var:copy(loaded_modules[i].running_var)
+                        end
                     end
                 end
             end
