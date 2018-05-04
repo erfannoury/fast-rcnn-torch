@@ -116,7 +116,7 @@ function Net:training()
     self.model:training()
     if config.freeze_batchnorm then
         self.model:apply(function(m) if torch.type(m):find("BatchNormalization")
-            then m:evaluate() end end)
+            then m.accGradParameters = function() end end)
     end
 end
 
