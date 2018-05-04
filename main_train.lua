@@ -11,6 +11,8 @@ local param_path = config.pre_trained_file
 local model_path = config.model_def
 print('Creating save directory at ' .. config.save_path)
 paths.mkdir(config.save_path)
+print('Creating log directory at ' .. config.log_path)
+paths.mkdir(config.log_path)
 
 
 -- Loading the dataset
