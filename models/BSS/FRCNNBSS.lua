@@ -33,7 +33,7 @@ local function create_model(opt)
     if opt.use_bn then
         local bn2 = cudnn.SpatialBatchNormalization(256)
         bn2.name = "batchnorm2"
-        shared:add(bn1)
+        shared:add(bn2)
     end
     shared:add(cudnn.ReLU(true))
     shared:add(cudnn.SpatialMaxPooling(3, 3, 2, 2))
