@@ -7,6 +7,7 @@ if config.use_maryamnet_inputmaker then
 end
 if config.use_maryamnet255_inputmaker then
     inputMaker = detection.MaryamNet255InputMaker()
+end
 
 
 function NetworkWrapper:__init()
