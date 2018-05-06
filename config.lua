@@ -186,6 +186,11 @@ function config.parse(arg)
         "Whether to use MaryamNet input maker"
     )
     cmd:option(
+        "-use_maryamnet255_inputmaker",
+        false,
+        "Whether to use MaryamNet input maker"
+    )
+    cmd:option(
         "-freeze_batchnorm",
         false,
         "Whether to freeze the Batch Normalization layers"

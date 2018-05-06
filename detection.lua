@@ -24,6 +24,7 @@ torch.include("detection", "ROI/ROIPooling.lua")
 -- Detection utilities
 torch.include("detection", "utils/InputMaker.lua")
 torch.include("detection", "utils/MaryamNetInputMaker.lua")
+torch.include("detection", "utils/MaryamNet255InputMaker.lua")
 torch.include("detection", "utils/CaffeLoader.lua")
 torch.include("detection", "utils/CaffeModelConverter.lua")
 torch.include("detection", "utils/heap/heap.lua")
