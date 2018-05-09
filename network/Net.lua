@@ -114,8 +114,19 @@ end
 
 function Net:training()
     self.model:training()
+    if config.use_identity_convbn then
+        local function make_convbn_identity(m)
+            if torch.type(m):find("SpatialBatchNormalization") then
+                m.weight:fill(1.0)
+                m.bias:fill(0.0)
+                config.freeze_batchnorm = true
+            end
+        end
+        self.model:apply(make_convbn_identity)
+    end
+
     if config.freeze_batchnorm then
-        self.model:apply(function(m) if torch.type(m):find("BatchNormalization")
+        self.model:apply(function(m) if torch.type(m):find("SpatialBatchNormalization")
             then m.accGradParameters = function() end end end)
     end
 end

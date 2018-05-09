@@ -195,7 +195,11 @@ function config.parse(arg)
         false,
         "Whether to freeze the Batch Normalization layers"
     )
-
+    cmd:option(
+        '-use_identity_convbn',
+        false,
+        "Whether to use frozen identity conv batch normalization"
+    )
 
     -- Parsing the command line
     config = cmd:parse(arg or {})
