@@ -248,17 +248,18 @@ function NetworkWrapper:warmup(db)
     config.img_per_batch = config.warmup_batchsize
     local n_iters = math.floor(n_image / config.warmup_batchsize) + 1
 
-    local inputs_gpu
+    local inputs_gpu = torch.CudaTensor()
 
     for i = 1, n_iters do
         collectgarbage()
         print(string.format(
             "Processing batch %d / %d",
-            i + 1, n_iters
+            i , n_iters
         ))
         local inputs, labels, loss_weights = batcher:getNextBatch()
-        inputs_gpu, inputs = utils:recursiveResizeAsCopyTyped(inputs_gpu, inputs, "torch.CudaTensor")
-
+        inputs_gpu, inputs = utils:recursiveResizeAsCopyTyped(
+            inputs_gpu, inputs, "torch.CudaTensor")
+        print(inputs_gpu:size())
         local outputs = network:get_shared():forward(inputs_gpu)
     end
     print('running mean variable for batchnorm1 after warmup')
