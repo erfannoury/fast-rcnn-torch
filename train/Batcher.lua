@@ -3,6 +3,9 @@ local inputMaker = detection.InputMaker()
 if config.use_maryamnet_inputmaker then
     inputMaker = detection.MaryamNetInputMaker()
 end
+if config.use_maryamnet255_inputmaker then
+    inputMaker = detection.MaryamNet255InputMaker()
+end
 local utils = detection.GeneralUtils()
 
 
