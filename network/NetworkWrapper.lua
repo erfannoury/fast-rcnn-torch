@@ -1,7 +1,7 @@
 local NetworkWrapper = torch.class("detection.NetworkWrapper")
 local utils = detection.GeneralUtils()
 local ROI = detection.ROI()
-local InputMaker = detection.InputMaker()
+local inputMaker = detection.InputMaker()
 if config.use_maryamnet_inputmaker then
     inputMaker = detection.MaryamNetInputMaker()
 end
@@ -58,7 +58,7 @@ function NetworkWrapper:trainNetwork(db)
 end
 
 function NetworkWrapper:detect(im, boxes)
-    local proc_im, proc_boxes, im_scale = InputMaker:process(im, boxes)
+    local proc_im, proc_boxes, im_scale = inputMaker:process(im, boxes)
 
     -- Making image 4D and create the input structure
     local inputs = {proc_im:view(1, proc_im:size(1), proc_im:size(2), proc_im:size(3)), proc_boxes}
