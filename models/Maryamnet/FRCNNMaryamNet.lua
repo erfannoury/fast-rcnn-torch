@@ -109,7 +109,7 @@ local function create_model(opt)
     model:add(output)
 
     model:cuda()
-    return model, classifier, regressor, name
+    return model, classifier, regressor, name, shared
 end
 
 return create_model
