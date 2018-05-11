@@ -242,7 +242,7 @@ function NetworkWrapper:warmup(db)
     end
     network:get_shared():apply(make_convbn_identity_for_warmup)
     print('running mean variable for batchnorm1 before warmup')
-    print(network:get_shared().modules[1].running_mean)
+    print(network:get_shared().modules[2].running_mean)
 
     local old_img_per_batch = config.img_per_batch
     config.img_per_batch = config.warmup_batchsize
@@ -262,6 +262,6 @@ function NetworkWrapper:warmup(db)
         local outputs = network:get_shared():forward(inputs_gpu)
     end
     print('running mean variable for batchnorm1 after warmup')
-    print(network:get_shared().modules[1].running_mean)
+    print(network:get_shared().modules[2].running_mean)
     config.img_per_batch = old_img_per_batch
 end
