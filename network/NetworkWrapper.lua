@@ -221,3 +221,47 @@ function NetworkWrapper:testNetwork(db)
     -- Try to evaluate using the official eval functions
     local return_val = db:evaluate(all_detections)
 end
+
+
+function NetworkWrapper:warmup(db)
+    -- preparing the dataset
+    local n_image = db:size()
+    local n_class = db.num_classes
+
+    db:loadROIDB()
+    local roi = detection.ROI()
+    local bbox_means, bbox_stds = roi:create_roidb(db)
+    local batcher = detection.Batcher(roi)
+
+    local function make_convbn_identity_for_warmup(m)
+        if torch.type(m):find("SpatialBatchNormalization") then
+            m.weight:fill(1.0)
+            m.bias:fill(0.0)
+            m.accGradParameters = function() end
+        end
+    end
+    network:get_shared():apply(make_convbn_identity_for_warmup)
+    print('running mean variable for batchnorm1 before warmup')
+    print(network:get_shared().modules[1].running_mean)
+
+    local old_img_per_batch = config.img_per_batch
+    config.img_per_batch = config.warmup_batchsize
+    local n_iters = math.floor(n_image / config.warmup_batchsize) + 1
+
+    local inputs_gpu
+
+    for i = 1, n_iters do
+        collectgarbage()
+        print(string.format(
+            "Processing batch %d / %d",
+            i + 1, n_iters
+        ))
+        local inputs, labels, loss_weights = batcher:getNextBatch()
+        inputs_gpu, inputs = utils:recursiveResizeAsCopyTyped(inputs_gpu, inputs, "torch.CudaTensor")
+
+        local outputs = network:get_shared():forward(inputs_gpu)
+    end
+    print('running mean variable for batchnorm1 after warmup')
+    print(network:get_shared().modules[1].running_mean)
+    config.img_per_batch = old_img_per_batch
+end
