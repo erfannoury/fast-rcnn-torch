@@ -5,7 +5,7 @@ local roi = detection.ROI()
 
 
 function MaryamNet255InputMaker:__init()
-    local pixel_means = {122.7717, 115.9465, 102.9801}
+    self.pixel_means = {122.7717, 115.9465, 102.9801}
 end
 
 function MaryamNet255InputMaker:process(orig_im, bboxes)
