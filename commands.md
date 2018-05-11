@@ -78,7 +78,7 @@ $ CUDA_VISIBLE_DEVICES=0 th main_train.lua \
     -groups 1 -use_maryamnet255_inputmaker -do_identity_convbn_warmup -use_batchnorm
 ```
 
-## Testing MaryamNet run30 (2x2 Adam group=2) finetune all without BN, identity convbn
+## Testing MaryamNet run30 (2x2 Adam group=1) finetune all without BN, identity convbn
 ```bash
 $ CUDA_VISIBLE_DEVICES=0 th main_test.lua \
     -model_def /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/models/Maryamnet/FRCNNMaryamNet.lua \
@@ -88,7 +88,7 @@ $ CUDA_VISIBLE_DEVICES=0 th main_test.lua \
     -log_path /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/cache/maryamnet255logs/ -dataset voc_2007\
     -dataset_path /nfs1/datasets/PASCAL/VOCdevkit \
     -save_path /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/data/trained_models/nseq2_group2_lr0.0001_lrdecay0_wd0.0005_adam_siamese_255_BN_jittering_iter75000_identityconvbn \
-    -groups 2 -use_maryamnet255_inputmaker -use_identity_convbn
+    -groups 1 -use_maryamnet255_inputmaker -use_identity_convbn -use_batchnorm
 ```
 
 # BSS (Alpha Blending) models
