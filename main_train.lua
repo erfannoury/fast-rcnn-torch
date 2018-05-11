@@ -47,6 +47,10 @@ network = detection.Net(model_path, param_path, model_opt)
 -- Creating the network wrapper
 local network_wrapper = detection.NetworkWrapper() -- This adds train and test functionality to the global network
 
+if config.do_identity_convbn_warmup then
+    print("Warming up the network before training...")
+    network_wrapper:warmup(dataset)
+end
 -- Train the network on the dataset
 print("Training the network...")
 network_wrapper:trainNetwork(dataset)
