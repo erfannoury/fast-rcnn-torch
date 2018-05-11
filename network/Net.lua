@@ -14,7 +14,7 @@ function Net:__init(model_path, weight_file_path, model_opt)
     self.model_path = model_path
     self.weight_file_path = weight_file_path
     self.model_opt = model_opt
-    self.model, self.classifier, self.regressor, self.name = dofile(model_path)(model_opt)
+    self.model, self.classifier, self.regressor, self.name, self.shared = dofile(model_path)(model_opt)
 
     if config.nGPU > 1 and not model_opt.test then
         self:_makeParallel()
@@ -114,20 +114,29 @@ end
 
 function Net:training()
     self.model:training()
-    if config.use_identity_convbn then
-        local function make_convbn_identity(m)
+    if config.do_identity_convbn_warmup then
+        local function make_convbn_identity_and_frozen(m)
             if torch.type(m):find("SpatialBatchNormalization") then
-                m.weight:fill(1.0)
-                m.bias:fill(0.0)
-                config.freeze_batchnorm = true
+                m:evaluate()
             end
         end
-        self.model:apply(make_convbn_identity)
-    end
+        self.shared:apply(make_convbn_identity_and_frozen)
+    else
+        if config.use_identity_convbn then
+            local function make_convbn_identity(m)
+                if torch.type(m):find("SpatialBatchNormalization") then
+                    m.weight:fill(1.0)
+                    m.bias:fill(0.0)
+                    config.freeze_batchnorm = true
+                end
+            end
+            self.model:apply(make_convbn_identity)
+        end
 
-    if config.freeze_batchnorm then
-        self.model:apply(function(m) if torch.type(m):find("SpatialBatchNormalization")
-            then m.accGradParameters = function() end end end)
+        if config.freeze_batchnorm then
+            self.model:apply(function(m) if torch.type(m):find("SpatialBatchNormalization")
+                then m.accGradParameters = function() end end end)
+        end
     end
 end
 
@@ -169,6 +178,10 @@ end
 
 function Net:get_model()
     return self.model
+end
+
+function Net:get_shared()
+    return self.shared
 end
 
 function Net:forward(inputs)
