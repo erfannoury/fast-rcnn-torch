@@ -49,6 +49,11 @@ function config.parse(arg)
         "Images per minibatch"
     )
     cmd:option(
+        "-warmup_batchsize",
+        480,
+        "Number of image per minibatch when doing network warmup"
+    )
+    cmd:option(
         "-GPU_ID",
         1,
         "Main GPU ID to be used"
@@ -199,6 +204,11 @@ function config.parse(arg)
         '-use_identity_convbn',
         false,
         "Whether to use frozen identity conv batch normalization"
+    )
+    cmd:option(
+        '-do_identity_convbn_warmup',
+        false,
+        "Whether to do one epoch of warmup for identity conv batch normalization"
     )
 
     -- Parsing the command line
