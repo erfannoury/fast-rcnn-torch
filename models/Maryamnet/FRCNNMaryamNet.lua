@@ -11,55 +11,56 @@ local function create_model(opt)
     if opt.use_bn then
         name = "frcnn_maryamnetbn"
     end
+    backend = backend or cudnn
 
     -- SHARED PART
     local shared = nn.Sequential()
-    local conv1 = cudnn.SpatialConvolution(
+    local conv1 = backend.SpatialConvolution(
         3, 96, 11, 11, 4, 4, 2, 2, 1)
     conv1.name = "conv1"
     shared:add(conv1)
     if opt.use_bn then
-        shared:add(cudnn.SpatialBatchNormalization(96))
+        shared:add(backend.SpatialBatchNormalization(96))
     end
-    shared:add(cudnn.ReLU(true))
-    shared:add(cudnn.SpatialMaxPooling(3, 3, 2, 2))
+    shared:add(backend.ReLU(true))
+    shared:add(backend.SpatialMaxPooling(3, 3, 2, 2))
 
-    local conv2 = cudnn.SpatialConvolution(
+    local conv2 = backend.SpatialConvolution(
         96, 256, 5, 5, 1, 1, 2, 2, opt.groups)
     conv2.name = "conv2"
     shared:add(conv2)
     if opt.use_bn then
-        shared:add(cudnn.SpatialBatchNormalization(256))
+        shared:add(backend.SpatialBatchNormalization(256))
     end
-    shared:add(cudnn.ReLU(true))
-    shared:add(cudnn.SpatialMaxPooling(3, 3, 2, 2))
+    shared:add(backend.ReLU(true))
+    shared:add(backend.SpatialMaxPooling(3, 3, 2, 2))
 
-    local conv3 = cudnn.SpatialConvolution(
+    local conv3 = backend.SpatialConvolution(
         256, 384, 3, 3, 1, 1, 1, 1, 1)
     conv3.name = "conv3"
     shared:add(conv3)
     if opt.use_bn then
-        shared:add(cudnn.SpatialBatchNormalization(384))
+        shared:add(backend.SpatialBatchNormalization(384))
     end
-    shared:add(cudnn.ReLU(true))
+    shared:add(backend.ReLU(true))
 
-    local conv4 = cudnn.SpatialConvolution(
+    local conv4 = backend.SpatialConvolution(
         384, 384, 3, 3, 1, 1, 1, 1, opt.groups)
     conv4.name = "conv4"
     shared:add(conv4)
     if opt.use_bn then
-        shared:add(cudnn.SpatialBatchNormalization(384))
+        shared:add(backend.SpatialBatchNormalization(384))
     end
-    shared:add(cudnn.ReLU(true))
+    shared:add(backend.ReLU(true))
 
-    local conv5 = cudnn.SpatialConvolution(
+    local conv5 = backend.SpatialConvolution(
         384, 256, 3, 3, 1, 1, 1, 1, opt.groups)
     conv5.name = "conv5"
     shared:add(conv5)
     if opt.use_bn then
-        shared:add(cudnn.SpatialBatchNormalization(256))
+        shared:add(backend.SpatialBatchNormalization(256))
     end
-    shared:add(cudnn.ReLU(true))
+    shared:add(backend.ReLU(true))
 
     -- Convolutions and roi info
     local shared_roi_info = nn.ParallelTable()
@@ -73,18 +74,18 @@ local function create_model(opt)
     fc6.name = "fc6"
     linear:add(fc6)
     if opt.use_bn then
-        linear:add(cudnn.BatchNormalization(4096))
+        linear:add(backend.BatchNormalization(4096))
     end
-    linear:add(cudnn.ReLU(true))
+    linear:add(backend.ReLU(true))
     linear:add(nn.Dropout(0.5))
 
     local fc7 = nn.Linear(4096, 4096)
     fc7.name = "fc7"
     linear:add(fc7)
     if opt.use_bn then
-        linear:add(cudnn.BatchNormalization(4096))
+        linear:add(backend.BatchNormalization(4096))
     end
-    linear:add(cudnn.ReLU(true))
+    linear:add(backend.ReLU(true))
     linear:add(nn.Dropout(0.5))
 
     -- classifier
