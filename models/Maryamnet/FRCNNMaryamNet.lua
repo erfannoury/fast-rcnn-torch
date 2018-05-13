@@ -84,7 +84,9 @@ local function create_model(opt)
     fc6.name = "fc6"
     linear:add(fc6)
     if opt.use_bn then
-        linear:add(backend.BatchNormalization(4096))
+        bnfc6 = nn.BatchNormalization(4096)
+        bnfc6.name = 'batchnorm6'
+        linear:add(bnfc6)
     end
     linear:add(backend.ReLU(true))
     linear:add(nn.Dropout(0.5))
@@ -93,7 +95,9 @@ local function create_model(opt)
     fc7.name = "fc7"
     linear:add(fc7)
     if opt.use_bn then
-        linear:add(backend.BatchNormalization(4096))
+        bnfc7 = nn.BatchNormalization(4096)
+        bnfc7.name = 'batchnorm7'
+        linear:add(bnfc7)
     end
     linear:add(backend.ReLU(true))
     linear:add(nn.Dropout(0.5))
