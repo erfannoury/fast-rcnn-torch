@@ -251,7 +251,7 @@ function DataSetPascal:evaluate(all_detections)
                         string.format(
                             'voc_eval(\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',%d); quit;"',
                             config.dataset_path .. "/" .. config.dataset,
-                            config.save_path,
+                            config.save_path .. "/",
                             comp_id,
                             self.image_set,
                             "../../cache",
