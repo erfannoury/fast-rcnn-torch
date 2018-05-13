@@ -20,7 +20,9 @@ local function create_model(opt)
     conv1.name = "conv1"
     shared:add(conv1)
     if opt.use_bn then
-        shared:add(backend.SpatialBatchNormalization(96))
+        bn1 = nn.SpatialBatchNormalization(96)
+        bn1.name = "batchnorm1"
+        shared:add(bn1)
     end
     shared:add(backend.ReLU(true))
     shared:add(backend.SpatialMaxPooling(3, 3, 2, 2))
@@ -30,7 +32,9 @@ local function create_model(opt)
     conv2.name = "conv2"
     shared:add(conv2)
     if opt.use_bn then
-        shared:add(backend.SpatialBatchNormalization(256))
+        bn2 = nn.SpatialBatchNormalization(256)
+        bn2.name = 'batchnorm2'
+        shared:add(bn2)
     end
     shared:add(backend.ReLU(true))
     shared:add(backend.SpatialMaxPooling(3, 3, 2, 2))
@@ -40,7 +44,9 @@ local function create_model(opt)
     conv3.name = "conv3"
     shared:add(conv3)
     if opt.use_bn then
-        shared:add(backend.SpatialBatchNormalization(384))
+        bn3 = nn.SpatialBatchNormalization(384)
+        bn3.name = 'batchnorm3'
+        shared:add(bn3)
     end
     shared:add(backend.ReLU(true))
 
@@ -49,7 +55,9 @@ local function create_model(opt)
     conv4.name = "conv4"
     shared:add(conv4)
     if opt.use_bn then
-        shared:add(backend.SpatialBatchNormalization(384))
+        bn4 = nn.SpatialBatchNormalization(384)
+        bn4.name = 'batchnorm4'
+        shared:add(bn4)
     end
     shared:add(backend.ReLU(true))
 
@@ -58,7 +66,9 @@ local function create_model(opt)
     conv5.name = "conv5"
     shared:add(conv5)
     if opt.use_bn then
-        shared:add(backend.SpatialBatchNormalization(256))
+        bn5 = nn.SpatialBatchNormalization(256)
+        bn5.name = 'batchnorm5'
+        shared:add(bn5)
     end
     shared:add(backend.ReLU(true))
 
