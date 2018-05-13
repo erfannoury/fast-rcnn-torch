@@ -54,20 +54,20 @@ $ CUDA_VISIBLE_DEVICES=0 th main_test.lua \
 
 ## Training MaryamNet run30 (2x2 Adam group=1) finetune all without BN, identity convbn
 ```bash
-$ CUDA_VISIBLE_DEVICES=0 th main_train.lua \
+$ CUDA_VISIBLE_DEVICES=2 th main_train.lua \
     -pre_trained_file /nfs1/shared/for_erfan/final_results_evaluations_models/nseq2_group2_lr0.0001_lrdecay0_wd0.0005_adam_siamese_255_BN_jittering_iter75000_net_cpu.t7 \
     -model_def /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/models/Maryamnet/FRCNNMaryamNet.lua \
     -use_difficult_objs -scale 600 -max_size 1000 -img_per_batch 2 \
     -roi_per_img 128 -use_flipped \
     -log_path /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/cache/maryamnet255logs/ -dataset voc_2007\
     -dataset_path /nfs1/datasets/PASCAL/VOCdevkit \
-    -save_path /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/data/trained_models/nseq2_group2_lr0.0001_lrdecay0_wd0.0005_adam_siamese_255_BN_jittering_iter75000_identityconvbn \
+    -save_path /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/data/trained_models/nseq2_group2_lr0.0001_lrdecay0_wd0.0005_adam_siamese_255_BN_jittering_iter75000_identityconvbn_fixedbackened \
     -groups 1 -use_maryamnet255_inputmaker -use_identity_convbn -use_batchnorm
 ```
 
 ## Training MaryamNet run30 (2x2 Adam group=1) finetune all without BN, with convbn warmup
 ```bash
-$ CUDA_VISIBLE_DEVICES=0 th main_train.lua \
+$ CUDA_VISIBLE_DEVICES='' th main_train.lua \
     -pre_trained_file /nfs1/shared/for_erfan/final_results_evaluations_models/nseq2_group2_lr0.0001_lrdecay0_wd0.0005_adam_siamese_255_BN_jittering_iter75000_net_cpu.t7 \
     -model_def /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/models/Maryamnet/FRCNNMaryamNet.lua \
     -use_difficult_objs -scale 600 -max_size 1000 -img_per_batch 2 \
@@ -80,17 +80,28 @@ $ CUDA_VISIBLE_DEVICES=0 th main_train.lua \
 
 ## Testing MaryamNet run30 (2x2 Adam group=1) finetune all without BN, identity convbn
 ```bash
-$ CUDA_VISIBLE_DEVICES=0 th main_test.lua \
+$ CUDA_VISIBLE_DEVICES=5 th main_test.lua \
     -model_def /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/models/Maryamnet/FRCNNMaryamNet.lua \
-    -model_weights /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/data/trained_models/nseq2_group2_lr0.0001_lrdecay0_wd0.0005_adam_siamese_255_BN_jittering_iter75000_identityconvbn/frcnn_maryamnet_VOC2007_iter_80000.t7 \
+    -model_weights /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/data/trained_models/nseq2_group2_lr0.0001_lrdecay0_wd0.0005_adam_siamese_255_BN_jittering_iter75000_identityconvbn_fixedbackened/frcnn_maryamnetbn_VOC2007_iter_80000_05.12_11.00.t7 \
     -use_difficult_objs -scale 600 -max_size 1000 -img_per_batch 2 \
     -roi_per_img 128 -use_flipped \
     -log_path /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/cache/maryamnet255logs/ -dataset voc_2007\
     -dataset_path /nfs1/datasets/PASCAL/VOCdevkit \
-    -save_path /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/data/trained_models/nseq2_group2_lr0.0001_lrdecay0_wd0.0005_adam_siamese_255_BN_jittering_iter75000_identityconvbn \
+    -save_path /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/data/trained_models/nseq2_group2_lr0.0001_lrdecay0_wd0.0005_adam_siamese_255_BN_jittering_iter75000_identityconvbn_fixedbackened \
     -groups 1 -use_maryamnet255_inputmaker -use_identity_convbn -use_batchnorm
 ```
-
+## Testing MaryamNet run30 (2x2 Adam group=1) finetune all without BN, with convbn warmup
+```bash
+$ CUDA_VISIBLE_DEVICES=5 th main_test.lua \
+    -model_def /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/models/Maryamnet/FRCNNMaryamNet.lua \
+    -model_weights /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/data/trained_models/nseq2_group2_lr0.0001_lrdecay0_wd0.0005_adam_siamese_255_BN_jittering_iter75000_warmupconvbn/frcnn_maryamnetbn_VOC2007_iter_80000_05.12_05.34_named.t7 \
+    -use_difficult_objs -scale 600 -max_size 1000 -img_per_batch 2 \
+    -roi_per_img 128 -use_flipped \
+    -log_path /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/cache/maryamnet255logs/ -dataset voc_2007\
+    -dataset_path /nfs1/datasets/PASCAL/VOCdevkit \
+    -save_path /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/data/trained_models/nseq2_group2_lr0.0001_lrdecay0_wd0.0005_adam_siamese_255_BN_jittering_iter75000_warmupconvbn \
+    -groups 1 -use_maryamnet255_inputmaker  -use_batchnorm
+```
 # BSS (Alpha Blending) models
 
 ## Training BSS (12 classes, batchnorm in conv) finetune all with BN
@@ -144,4 +155,55 @@ $ CUDA_VISIBLE_DEVICES=5 th main_test.lua \
     -dataset_path /nfs1/datasets/PASCAL/VOCdevkit \
     -save_path /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/data/trained_models/bss2_nClasses12_fullbn_freezebn \
     -groups 1 -use_batchnorm -use_maryamnet_inputmaker -use_flipped -freeze_batchnorm
+
+```
+
+## Training MaryamNet run45 (5x5 Adam group=1) finetune all without BN, identity convbn
+```bash
+$ CUDA_VISIBLE_DEVICES=5 th main_train.lua \
+    -pre_trained_file /nfs1/code/maryam/final_experiments_results/nseq5_lr0.001_lrdecay100000_wd0.0005_adam_label24_siamese_255_BNfalse/nseq5_lr0.001_lrdecay100000_wd0.0005_adam_label24_siamese_255_BNfalse_iter225000_net.t7\
+    -model_def /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/models/Maryamnet/FRCNNMaryamNet.lua \
+    -use_difficult_objs -scale 600 -max_size 1000 -img_per_batch 2 \
+    -roi_per_img 128 -use_flipped \
+    -log_path /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/cache/maryamnet255logs/ -dataset voc_2007\
+    -dataset_path /nfs1/datasets/PASCAL/VOCdevkit \
+    -save_path /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/data/trained_models/nseq5_lr0.001_lrdecay100000_wd0.0005_adam_label24_siamese_255_BNfalse_iter225000_identityconvbn_fixedbackened \
+    -groups 1 -use_maryamnet255_inputmaker -use_identity_convbn -use_batchnorm
+```
+
+## Training MaryamNet run45 (5x5 Adam group=1) finetune all without BN, with convbn warmup
+```bash
+$ CUDA_VISIBLE_DEVICES=4 th main_train.lua \
+    -pre_trained_file /nfs1/code/maryam/final_experiments_results/nseq5_lr0.001_lrdecay100000_wd0.0005_adam_label24_siamese_255_BNfalse/nseq5_lr0.001_lrdecay100000_wd0.0005_adam_label24_siamese_255_BNfalse_iter225000_net.t7 \
+    -model_def /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/models/Maryamnet/FRCNNMaryamNet.lua \
+    -use_difficult_objs -scale 600 -max_size 1000 -img_per_batch 2 \
+    -roi_per_img 128 -use_flipped \
+    -log_path /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/cache/maryamnet255logs/ -dataset voc_2007\
+    -dataset_path /nfs1/datasets/PASCAL/VOCdevkit \
+    -save_path /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/data/trained_models/nseq5_lr0.001_lrdecay100000_wd0.0005_adam_label24_siamese_255_BNfalse_iter225000_warmupconvbn \
+    -groups 1 -use_maryamnet255_inputmaker -do_identity_convbn_warmup -use_batchnorm
+```
+## Testing MaryamNet run45 (5x5 Adam group=1) finetune all without BN, identity convbn
+```bash
+$ CUDA_VISIBLE_DEVICES=5 th main_test.lua \
+    -model_def /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/models/Maryamnet/FRCNNMaryamNet.lua \
+    -model_weights /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/data/trained_models/nseq2_group2_lr0.0001_lrdecay0_wd0.0005_adam_siamese_255_BN_jittering_iter75000_identityconvbn_fixedbackened/frcnn_maryamnetbn_VOC2007_iter_80000_05.12_11.00.t7 \
+    -use_difficult_objs -scale 600 -max_size 1000 -img_per_batch 2 \
+    -roi_per_img 128 -use_flipped \
+    -log_path /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/cache/maryamnet255logs/ -dataset voc_2007\
+    -dataset_path /nfs1/datasets/PASCAL/VOCdevkit \
+    -save_path /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/data/trained_models/nseq5_lr0.001_lrdecay100000_wd0.0005_adam_label24_siamese_255_BNfalse_iter225000_identityconvbn_fixedbackened \
+    -groups 1 -use_maryamnet255_inputmaker -use_identity_convbn -use_batchnorm
+```
+## Testing MaryamNet run30 (2x2 Adam group=1) finetune all without BN, with convbn warmup
+```bash
+$ CUDA_VISIBLE_DEVICES=5 th main_test.lua \
+    -model_def /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/models/Maryamnet/FRCNNMaryamNet.lua \
+    -model_weights /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/data/trained_models/nseq2_group2_lr0.0001_lrdecay0_wd0.0005_adam_siamese_255_BN_jittering_iter75000_warmupconvbn/frcnn_maryamnetbn_VOC2007_iter_80000_05.12_05.34_named.t7 \
+    -use_difficult_objs -scale 600 -max_size 1000 -img_per_batch 2 \
+    -roi_per_img 128 -use_flipped \
+    -log_path /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/cache/maryamnet255logs/ -dataset voc_2007\
+    -dataset_path /nfs1/datasets/PASCAL/VOCdevkit \
+    -save_path /nfs1/code/maryam/Erfan_frcnn/fast-rcnn-torch/data/trained_models/nseq5_lr0.001_lrdecay100000_wd0.0005_adam_label24_siamese_255_BNfalse_iter225000_warmupconvbn \
+    -groups 1 -use_maryamnet255_inputmaker  -use_batchnorm
 ```
